@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shang.schedule.mapper.UsersMapper" >
+  <resultMap id="BaseResultMap" type="com.shang.schedule.pojo.Users" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="user_create_date" property="userCreateDate" jdbcType="TIMESTAMP" />
+    <result column="user_update_date" property="userUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="create_ip" property="createIp" jdbcType="VARCHAR" />
+    <result column="update_ip" property="updateIp" jdbcType="VARCHAR" />
+    <result column="user_status" property="userStatus" jdbcType="INTEGER" />
+    <result column="login_count" property="loginCount" jdbcType="INTEGER" />
+    <result column="user_sex" property="userSex" jdbcType="INTEGER" />
+    <result column="user_type" property="userType" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="user_QQ" property="userQq" jdbcType="VARCHAR" />
+    <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+    <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+    <result column="user_score" property="userScore" jdbcType="INTEGER" />
+    <result column="user_total_score" property="userTotalScore" jdbcType="INTEGER" />
+    <result column="user_photo" property="userPhoto" jdbcType="VARCHAR" />
+    <result column="user_flag" property="userFlag" jdbcType="INTEGER" />
+    <result column="user_money" property="userMoney" jdbcType="DOUBLE" />
+    <result column="lock_money" property="lockMoney" jdbcType="DOUBLE" />
+    <result column="pay_password" property="payPassword" jdbcType="INTEGER" />
+    <result column="user_from" property="userFrom" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_name, password, user_create_date, user_update_date, create_ip, update_ip, 
+    user_status, login_count, user_sex, user_type, name, user_QQ, user_phone, user_email, 
+    user_score, user_total_score, user_photo, user_flag, user_money, lock_money, pay_password, 
+    user_from
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.shang.schedule.pojo.UsersExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from users
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from users
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.shang.schedule.pojo.UsersExample" >
+    delete from users
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.shang.schedule.pojo.Users" >
+    insert into users (id, user_name, password, 
+      user_create_date, user_update_date, create_ip, 
+      update_ip, user_status, login_count, 
+      user_sex, user_type, name, 
+      user_QQ, user_phone, user_email, 
+      user_score, user_total_score, user_photo, 
+      user_flag, user_money, lock_money, 
+      pay_password, user_from)
+    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{userCreateDate,jdbcType=TIMESTAMP}, #{userUpdateDate,jdbcType=TIMESTAMP}, #{createIp,jdbcType=VARCHAR}, 
+      #{updateIp,jdbcType=VARCHAR}, #{userStatus,jdbcType=INTEGER}, #{loginCount,jdbcType=INTEGER}, 
+      #{userSex,jdbcType=INTEGER}, #{userType,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{userQq,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, 
+      #{userScore,jdbcType=INTEGER}, #{userTotalScore,jdbcType=INTEGER}, #{userPhoto,jdbcType=VARCHAR}, 
+      #{userFlag,jdbcType=INTEGER}, #{userMoney,jdbcType=DOUBLE}, #{lockMoney,jdbcType=DOUBLE}, 
+      #{payPassword,jdbcType=INTEGER}, #{userFrom,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shang.schedule.pojo.Users" >
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="userCreateDate != null" >
+        user_create_date,
+      </if>
+      <if test="userUpdateDate != null" >
+        user_update_date,
+      </if>
+      <if test="createIp != null" >
+        create_ip,
+      </if>
+      <if test="updateIp != null" >
+        update_ip,
+      </if>
+      <if test="userStatus != null" >
+        user_status,
+      </if>
+      <if test="loginCount != null" >
+        login_count,
+      </if>
+      <if test="userSex != null" >
+        user_sex,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="userQq != null" >
+        user_QQ,
+      </if>
+      <if test="userPhone != null" >
+        user_phone,
+      </if>
+      <if test="userEmail != null" >
+        user_email,
+      </if>
+      <if test="userScore != null" >
+        user_score,
+      </if>
+      <if test="userTotalScore != null" >
+        user_total_score,
+      </if>
+      <if test="userPhoto != null" >
+        user_photo,
+      </if>
+      <if test="userFlag != null" >
+        user_flag,
+      </if>
+      <if test="userMoney != null" >
+        user_money,
+      </if>
+      <if test="lockMoney != null" >
+        lock_money,
+      </if>
+      <if test="payPassword != null" >
+        pay_password,
+      </if>
+      <if test="userFrom != null" >
+        user_from,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userCreateDate != null" >
+        #{userCreateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userUpdateDate != null" >
+        #{userUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createIp != null" >
+        #{createIp,jdbcType=VARCHAR},
+      </if>
+      <if test="updateIp != null" >
+        #{updateIp,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="loginCount != null" >
+        #{loginCount,jdbcType=INTEGER},
+      </if>
+      <if test="userSex != null" >
+        #{userSex,jdbcType=INTEGER},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="userQq != null" >
+        #{userQq,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userScore != null" >
+        #{userScore,jdbcType=INTEGER},
+      </if>
+      <if test="userTotalScore != null" >
+        #{userTotalScore,jdbcType=INTEGER},
+      </if>
+      <if test="userPhoto != null" >
+        #{userPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="userFlag != null" >
+        #{userFlag,jdbcType=INTEGER},
+      </if>
+      <if test="userMoney != null" >
+        #{userMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="lockMoney != null" >
+        #{lockMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="payPassword != null" >
+        #{payPassword,jdbcType=INTEGER},
+      </if>
+      <if test="userFrom != null" >
+        #{userFrom,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.shang.schedule.pojo.UsersExample" resultType="java.lang.Integer" >
+    select count(*) from users
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update users
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userName != null" >
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userCreateDate != null" >
+        user_create_date = #{record.userCreateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userUpdateDate != null" >
+        user_update_date = #{record.userUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createIp != null" >
+        create_ip = #{record.createIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateIp != null" >
+        update_ip = #{record.updateIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userStatus != null" >
+        user_status = #{record.userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginCount != null" >
+        login_count = #{record.loginCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.userSex != null" >
+        user_sex = #{record.userSex,jdbcType=INTEGER},
+      </if>
+      <if test="record.userType != null" >
+        user_type = #{record.userType,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userQq != null" >
+        user_QQ = #{record.userQq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPhone != null" >
+        user_phone = #{record.userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userEmail != null" >
+        user_email = #{record.userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userScore != null" >
+        user_score = #{record.userScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.userTotalScore != null" >
+        user_total_score = #{record.userTotalScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.userPhoto != null" >
+        user_photo = #{record.userPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userFlag != null" >
+        user_flag = #{record.userFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.userMoney != null" >
+        user_money = #{record.userMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.lockMoney != null" >
+        lock_money = #{record.lockMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.payPassword != null" >
+        pay_password = #{record.payPassword,jdbcType=INTEGER},
+      </if>
+      <if test="record.userFrom != null" >
+        user_from = #{record.userFrom,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update users
+    set id = #{record.id,jdbcType=INTEGER},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      user_create_date = #{record.userCreateDate,jdbcType=TIMESTAMP},
+      user_update_date = #{record.userUpdateDate,jdbcType=TIMESTAMP},
+      create_ip = #{record.createIp,jdbcType=VARCHAR},
+      update_ip = #{record.updateIp,jdbcType=VARCHAR},
+      user_status = #{record.userStatus,jdbcType=INTEGER},
+      login_count = #{record.loginCount,jdbcType=INTEGER},
+      user_sex = #{record.userSex,jdbcType=INTEGER},
+      user_type = #{record.userType,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      user_QQ = #{record.userQq,jdbcType=VARCHAR},
+      user_phone = #{record.userPhone,jdbcType=VARCHAR},
+      user_email = #{record.userEmail,jdbcType=VARCHAR},
+      user_score = #{record.userScore,jdbcType=INTEGER},
+      user_total_score = #{record.userTotalScore,jdbcType=INTEGER},
+      user_photo = #{record.userPhoto,jdbcType=VARCHAR},
+      user_flag = #{record.userFlag,jdbcType=INTEGER},
+      user_money = #{record.userMoney,jdbcType=DOUBLE},
+      lock_money = #{record.lockMoney,jdbcType=DOUBLE},
+      pay_password = #{record.payPassword,jdbcType=INTEGER},
+      user_from = #{record.userFrom,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shang.schedule.pojo.Users" >
+    update users
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userCreateDate != null" >
+        user_create_date = #{userCreateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userUpdateDate != null" >
+        user_update_date = #{userUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createIp != null" >
+        create_ip = #{createIp,jdbcType=VARCHAR},
+      </if>
+      <if test="updateIp != null" >
+        update_ip = #{updateIp,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        user_status = #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="loginCount != null" >
+        login_count = #{loginCount,jdbcType=INTEGER},
+      </if>
+      <if test="userSex != null" >
+        user_sex = #{userSex,jdbcType=INTEGER},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="userQq != null" >
+        user_QQ = #{userQq,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        user_phone = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        user_email = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userScore != null" >
+        user_score = #{userScore,jdbcType=INTEGER},
+      </if>
+      <if test="userTotalScore != null" >
+        user_total_score = #{userTotalScore,jdbcType=INTEGER},
+      </if>
+      <if test="userPhoto != null" >
+        user_photo = #{userPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="userFlag != null" >
+        user_flag = #{userFlag,jdbcType=INTEGER},
+      </if>
+      <if test="userMoney != null" >
+        user_money = #{userMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="lockMoney != null" >
+        lock_money = #{lockMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="payPassword != null" >
+        pay_password = #{payPassword,jdbcType=INTEGER},
+      </if>
+      <if test="userFrom != null" >
+        user_from = #{userFrom,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shang.schedule.pojo.Users" >
+    update users
+    set user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      user_create_date = #{userCreateDate,jdbcType=TIMESTAMP},
+      user_update_date = #{userUpdateDate,jdbcType=TIMESTAMP},
+      create_ip = #{createIp,jdbcType=VARCHAR},
+      update_ip = #{updateIp,jdbcType=VARCHAR},
+      user_status = #{userStatus,jdbcType=INTEGER},
+      login_count = #{loginCount,jdbcType=INTEGER},
+      user_sex = #{userSex,jdbcType=INTEGER},
+      user_type = #{userType,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      user_QQ = #{userQq,jdbcType=VARCHAR},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      user_email = #{userEmail,jdbcType=VARCHAR},
+      user_score = #{userScore,jdbcType=INTEGER},
+      user_total_score = #{userTotalScore,jdbcType=INTEGER},
+      user_photo = #{userPhoto,jdbcType=VARCHAR},
+      user_flag = #{userFlag,jdbcType=INTEGER},
+      user_money = #{userMoney,jdbcType=DOUBLE},
+      lock_money = #{lockMoney,jdbcType=DOUBLE},
+      pay_password = #{payPassword,jdbcType=INTEGER},
+      user_from = #{userFrom,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
