@@ -1,42 +1,149 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 
-<head>
-<meta charset="UTF-8">
-<title>Calendar Window</title>
+	<head>
+		<meta charset="UTF-8">
+		<title>Calendar Window</title>
+
+		<link rel="stylesheet" href="../static/css/style.css">
+		<link rel="stylesheet" href="../static/css/animate.min.css" />
+		<link rel="stylesheet" href="../static/css/syalert.min.css" />
+		<style type="text/css">
+			.bg:hover {
+				background-color: burlywood;
+			}
+		</style>
 
 
+	</head>
 
-<link rel="stylesheet" href="../static/css/style.css">
+	<body>
 
-
-</head>
-
-<body>
-
-  <div class="calendar">
-	<div class="header">
-		<a data-action="prev-month" href="javascript:void(0)" title="Previous Month"><i></i></a>
-		<div class="text" data-render="month-year"></div>
-		<a data-action="next-month" href="javascript:void(0)" title="Next Month"><i></i></a>
-	</div>
-	<div class="months" data-flow="left">
-		<div class="month month-a">
-			<div class="render render-a"></div>
+		<div class="calendar">
+			<div class="header">
+				<a data-action="prev-month" href="javascript:void(0)" title="Previous Month"><i></i></a>
+				<div class="text" data-render="month-year"></div>
+				<a data-action="next-month" href="javascript:void(0)" title="Next Month"><i></i></a>
+			</div>
+			<div class="months" data-flow="left">
+				<div class="month month-a">
+					<div class="render render-a"></div>
+				</div>
+				<div class="month month-b">
+					<div class="render render-b"></div>
+				</div>
+			</div>
 		</div>
-		<div class="month month-b">
-			<div class="render render-b"></div>
+		<div id="jumpWindow">
+			<span>The quick fox jumps over a lazy dog.</span>
 		</div>
-	</div>
-</div>
-  
+
+		<!-- 确认弹窗 -->
+		<div class="sy-alert animated" sy-enter="zoomIn" sy-leave="zoomOut" sy-type="confirm" sy-mask="true"
+			id="alert1">
+			<div class="sy-title">Details</div>
+			<div class="sy-content">
+				<p class="input-item"> Hours: 3</p>
+				<p class="input-item"> Student: Tom</p>
+				<p class="input-item"> Teacher: Kazie</p>
+				<p class="input-item"> Time: 09:30-12:30</p>
+			</div>
+			<div class="sy-btn">
+				<button onClick="syalert.syhide('alert1')">Cancel</button>
+				<button onClick="ok('alert1')">Revise</button>
+			</div>
+		</div>
+
+		<!-- 消息弹窗 -->
+		<div class="sy-alert sy-alert-alert animated" sy-enter="zoomIn" sy-leave="zoomOut" sy-type="alert"
+			sy-mask="true" id="alert2">
+			<div class="sy-title">温馨提示</div>
+			<div class="sy-content">提交成功，谢谢！</div>
+			<div class="sy-btn">
+				<button onClick="ok('alert2')">确定</button>
+			</div>
+		</div>
+
+		<!-- 提示弹窗 -->
+		<div class="sy-alert sy-alert-tips animated" sy-enter="zoomIn" sy-leave="zoomOut" sy-type="tips" sy-mask="false"
+			id="alert3">
+			<div class="sy-content">请输入姓名</div>
+		</div>
+
+		<!-- 自定义弹窗 -->
+		<div class="sy-alert sy-alert-model animated" sy-enter="zoomIn" sy-leave="zoomOut" sy-type="confirm"
+			sy-mask="true" id="alert4">
+			<!-- <div class="sy-title">用户注册</div> -->
+			<!-- <p class="input-item"><input type="text" placeholder="请输入验证码" /><button class="getcode">获取验证码</button></p> -->
+			<div class="sy-content">
+				<div class="form">
+					<p class="">
+						Teachers：<label><input type="radio" value="Kezia" name="name" checked="checked">Kezia
+							<input style="padding-left: 10px;" type="radio" value="Sana" name="name">Sana
+						</label>
+					</p>
+					<p class="input-item"><input id="hour" type="text" placeholder="What hours" /></p>
+					<p class="input-item"><input id="time" type="text" placeholder="When" /></p>
+				</div>
+			</div>
+			<div class="sy-btn">
+				<button onClick="syalert.syhide('alert4')">Cancel</button>
+				<button onClick="ok('alert4')">Confirm</button>
+			</div>
+		</div>
+
+		<script src="http://libs.baidu.com/jquery/1.9.1/jquery.js"></script>
+		<script src="../static/js/index.js"></script>
+		<script src="../static/js/syalert.min.js"></script>
 
 
-<script  src="../static/js/index.js"></script>
+		<script type="text/javascript">
+			var timeId;
+			
+			$(function() {
+				
+			});
+
+			function check(id) {
+				timeId = id;
+				syalert.syopen('alert1');
+			}
+
+			function ok(id) {
+				syalert.syhide(id);
+				if ('alert1' == id) {
+					setTimeout(function() {
+						syalert.syopen('alert4');
+					}, 300)
+				} else if('alert4' == id){
+					let name = $("input[name='name']:checked").val();
+					let hour = $("#hour").val();
+					let time = $("#time").val();
+					let index = $("#my" + timeId).attr("value");
+					debugger;
+					let localStorage = window.localStorage;
+					let userId = localStorage.getItem('userId');
+					$.ajax({
+						type : "post",//请求方式
+						// contentType: "application/json;charset=UTF-8",//请求的媒体类型
+						url : "/addStudyTime",//请求地址
+						dataType:'json',
+						data : {'name':name, 
+								'hour':hour,
+								'time':time,
+								'index':index,
+								'id':userId
+								},//数据，json字符串
+						success : function(data) {//请求成功
+							let userId = data.data;
+						}
+					});
+				}
+			}
+		</script>
 
 
 
-
-</body>
+	</body>
 
 </html>

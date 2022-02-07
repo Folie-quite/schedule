@@ -101,3 +101,27 @@ body{
 [data-theme="dec"] .row.head{color:#546E7A}
 [data-theme="dec"] .header .text,
 [data-theme="dec"] .table .row .cell.active span{background-color:#546E7A}
+
+
+/* 鼠标悬停相关 */
+#jumpWindow {
+	position: absolute;
+	display: none;
+	padding: 10px;
+	width: 160px;
+	background: #e0edf7;
+	border-radius: 6px;
+}
+
+#jumpWindow::before {
+	content: "";
+	position: relative;
+	top: -20px;
+	left: 10px;
+	width: 0;
+	height: 0;
+	display: block;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-bottom: 10px solid #e0edf7;
+}
