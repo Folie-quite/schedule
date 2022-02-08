@@ -1,3 +1,7 @@
+var toMonth;
+var localStorage = window.localStorage;
+var userId = localStorage.getItem('userId');
+
 var Calendar = function(t) {
 	this.divId = t.RenderID ? t.RenderID : '[data-render="calendar"]', this.DaysOfWeek = t.DaysOfWeek ? t
 		.DaysOfWeek : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], this.Months = t.Months ? t.Months : ["Jan",
@@ -7,6 +11,7 @@ var Calendar = function(t) {
 	this.CurrentMonth = e.getMonth(), this.CurrentYear = e.getFullYear();
 	var r = t.Format;
 	this.f = "string" == typeof r ? r.charAt(0).toUpperCase() : "M"
+
 };
 Calendar.prototype.nextMonth = function() {
 	11 == this.CurrentMonth ? (this.CurrentMonth = 0, this.CurrentYear = this.CurrentYear + 1) : this.CurrentMonth =
@@ -30,12 +35,13 @@ Calendar.prototype.nextMonth = function() {
 		document.querySelector(".calendar .header").setAttribute("class", "header active")
 	}, 200), document.querySelector("body").setAttribute("data-theme", this.Months[document.querySelector(
 		'[data-active="true"] .render').getAttribute("data-month")].toLowerCase())
-		
-		setTimeout(function() {
-			for (let j = 1; j < 33; j++) {
-				addBob(j);
-			}
-		}, 1000);
+
+	initialize((this.CurrentMonth + 1), this.CurrentYear);
+	setTimeout(function() {
+		for (let j = 1; j < 33; j++) {
+			addBob(j);
+		}
+	}, 1000);
 }, Calendar.prototype.Calendar = function(t, e) {
 	"number" == typeof t && (this.CurrentYear = t), "number" == typeof t && (this.CurrentMonth = e);
 	var date = new Date();
@@ -57,7 +63,9 @@ Calendar.prototype.nextMonth = function() {
 			else if (h > i) d += '<div class="cell disable">' + l++ + "</div>";
 			else {
 				//增加了点击控制方法
-				d += '<div onclick="check(' + h + ')" value="' + a + '-' + n + '-' + h + '" id="my' + h + '"class="cell bg' + (r == h && this.CurrentMonth == n && this.CurrentYear == a ? " active" : "") + '"><span>' + h + "</span></div>", l = 1
+				d += '<div onclick="check(' + h + ')" value="' + a + '-' + (this.CurrentMonth + 1) + '-' + h +
+					'" id="my' + h + '"class="cell bg' + (r == h && this.CurrentMonth == n && this.CurrentYear ==
+						a ? " active" : "") + '"><span>' + h + "</span></div>", l = 1
 			}
 			c % 7 == 6 && h >= i && (v = 10), c++
 		}
@@ -66,7 +74,6 @@ Calendar.prototype.nextMonth = function() {
 	d += "</div>", document.querySelector('[data-render="month-year"]').innerHTML = s, document.querySelector(this
 		.divId).innerHTML = d, document.querySelector(this.divId).setAttribute("data-date", this.Months[e] +
 		" - " + t), document.querySelector(this.divId).setAttribute("data-month", e)
-	
 }, window.onload = function() {
 	var t = new Calendar({
 		RenderID: ".render-a",
@@ -89,19 +96,38 @@ Calendar.prototype.nextMonth = function() {
 					document.querySelector(".months").removeAttribute("data-loading")
 				})
 	}
-	
+
 };
 
-	
-function addBob(id){
-	
+
+function initialize(month, year) {
+	$.ajax({
+		type: "get", //请求方式
+		url: "/getStudyTimes", //请求地址
+		dataType: 'json',
+		data: {
+			'month': month,
+			'year': year,
+			'userId': userId
+		}, //数据，json字符串
+		success: function(data) { //请求成功
+			let userId = data.data;
+		}
+	});
+}
+
+function addBob(id) {
+
 	$("#my" + id).hover(function() {
+
+
+
 		$("#jumpWindow").html(id + "<br> test,<br> teach <br>erasdf");
 		show_jumpWindow(this);
 	}, function() {
 		show_jumpWindow();
 	});
-	
+
 	function show_jumpWindow(f) {
 		var d = $("#jumpWindow");
 		if (!f) {
@@ -118,6 +144,3 @@ function addBob(id){
 		}
 	}
 }
-
-
-	

@@ -2,9 +2,10 @@ package com.shang.schedule.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Users {
+public class Users implements Serializable {
     private Integer id;
 
     private String userName;

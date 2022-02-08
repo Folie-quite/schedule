@@ -8,6 +8,7 @@
 		<link rel="stylesheet" href="../static/css/style.css">
 		<link rel="stylesheet" href="../static/css/animate.min.css" />
 		<link rel="stylesheet" href="../static/css/syalert.min.css" />
+		<link href="../static/css/button/button.css" rel="stylesheet">
 		<style type="text/css">
 			.bg:hover {
 				background-color: burlywood;
@@ -34,9 +35,14 @@
 				</div>
 			</div>
 		</div>
+		
+		<button id="addClassHour" class="noselect classButton" style="margin-left: 44%; margin-top: 15px;">登录<span> >>></span></button>
+		
 		<div id="jumpWindow">
 			<span>The quick fox jumps over a lazy dog.</span>
 		</div>
+
+
 
 		<!-- 确认弹窗 -->
 		<div class="sy-alert animated" sy-enter="zoomIn" sy-leave="zoomOut" sy-type="confirm" sy-mask="true"
@@ -79,7 +85,6 @@
 				<div class="form">
 					<p class="">
 						Teachers：<label><input type="radio" value="Kezia" name="name" checked="checked">Kezia
-							<input style="padding-left: 10px;" type="radio" value="Sana" name="name">Sana
 						</label>
 					</p>
 					<p class="input-item"><input id="hour" type="text" placeholder="What hours" /></p>
@@ -100,14 +105,25 @@
 		<script type="text/javascript">
 			var timeId;
 			
+			
 			$(function() {
+				setTimeout(function() {
+				}, 1000);
 				
 			});
 
+			$("#addClassHour").click(function(){
+				syalert.syopen('alert4');
+				
+			});
+			
+			
 			function check(id) {
 				timeId = id;
 				syalert.syopen('alert1');
 			}
+
+
 
 			function ok(id) {
 				syalert.syhide(id);
@@ -120,19 +136,15 @@
 					let hour = $("#hour").val();
 					let time = $("#time").val();
 					let index = $("#my" + timeId).attr("value");
-					debugger;
-					let localStorage = window.localStorage;
-					let userId = localStorage.getItem('userId');
 					$.ajax({
 						type : "post",//请求方式
-						// contentType: "application/json;charset=UTF-8",//请求的媒体类型
 						url : "/addStudyTime",//请求地址
 						dataType:'json',
-						data : {'name':name, 
+						data : {'teacher':name, 
 								'hour':hour,
-								'time':time,
+								'specificTime':time,
 								'index':index,
-								'id':userId
+								'userId':userId
 								},//数据，json字符串
 						success : function(data) {//请求成功
 							let userId = data.data;

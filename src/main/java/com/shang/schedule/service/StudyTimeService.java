@@ -11,5 +11,18 @@ import com.shang.schedule.utils.MyResult;
  */
 public interface StudyTimeService {
 
+    /**
+     * 新增数据
+     * @param studyTime
+     * @return
+     */
     MyResult addStudyTime(StudyTime studyTime);
+    MyResult addStudyTime(StudyTime studyTime, String index);
+
+    /**
+     * 根据条件查询
+     * @param studyTime
+     * @return
+     */
+    MyResult getStudyTimeByExample(StudyTime studyTime);
 }

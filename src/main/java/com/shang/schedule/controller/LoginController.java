@@ -1,8 +1,10 @@
 package com.shang.schedule.controller;
 
+import com.shang.schedule.jedis.JedisService;
 import com.shang.schedule.pojo.Users;
 import com.shang.schedule.service.UsersService;
 import com.shang.schedule.utils.MyResult;
+import com.shang.schedule.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,8 @@ public class LoginController {
 
 	@Autowired
 	private UsersService usersService;
+	@Autowired
+	private JedisService jedisService;
 
 	@RequestMapping("/")
 	public String login(){
@@ -35,6 +39,11 @@ public class LoginController {
 		try {
 			if(usersService.verifyLogin(user, password)){
 				Users users = usersService.selectUserByUserName(user);
+				String s = users.getId().toString();
+				System.out.println(s);
+				jedisService.set(s, users);
+				Users user1 = (Users)jedisService.get(s);
+				System.out.println(user1.getUserName());
 				result = new MyResult(users.getId());
 			} else {
 				result = new MyResult(0);
