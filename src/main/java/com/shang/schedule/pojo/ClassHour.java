@@ -1,5 +1,7 @@
 package com.shang.schedule.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -8,10 +10,12 @@ public class ClassHour implements Serializable {
 
     private String createName;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
 
     private String updateName;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateDate;
 
     private Integer status;
@@ -20,7 +24,7 @@ public class ClassHour implements Serializable {
 
     private Integer type;
 
-    private Integer change;
+    private Integer variation;
 
     private Integer balance;
 
@@ -29,6 +33,16 @@ public class ClassHour implements Serializable {
     private Integer php;
 
     private String remark;
+
+    public ClassHour() {
+    }
+
+    public ClassHour(String createName, String teacher) {
+        this.createName = createName;
+        this.teacher = teacher;
+    }
+
+
 
     public Integer getId() {
         return id;
@@ -94,12 +108,12 @@ public class ClassHour implements Serializable {
         this.type = type;
     }
 
-    public Integer getChange() {
-        return change;
+    public Integer getVariation() {
+        return variation;
     }
 
-    public void setChange(Integer change) {
-        this.change = change;
+    public void setVariation(Integer variation) {
+        this.variation = variation;
     }
 
     public Integer getBalance() {

@@ -13,6 +13,10 @@
 			.bg:hover {
 				background-color: burlywood;
 			}
+			.bk{
+				border:1px solid #00F
+			}
+			
 		</style>
 
 
@@ -20,6 +24,9 @@
 
 	<body>
 
+		<div style="margin-left: 39%; margin-top:-25px; float: left; " class=" " >
+			Balance:<span id="myHours" style="font-size: 25px; font-style: italic;"> 0 </span> 
+		</div>
 		<div class="calendar">
 			<div class="header">
 				<a data-action="prev-month" href="javascript:void(0)" title="Previous Month"><i></i></a>
@@ -36,8 +43,11 @@
 			</div>
 		</div>
 		
-		<button id="addClassHour" class="noselect classButton" style="margin-left: 44%; margin-top: 15px;">登录<span> >>></span></button>
-		
+		<div>
+			
+			<button id="addClassHour" class="noselect classButton" style="margin-left: 44%; margin-top: 15px;">Recharge<span> >>></span></button>
+			
+		</div>
 		<div id="jumpWindow">
 			<span>The quick fox jumps over a lazy dog.</span>
 		</div>
@@ -49,10 +59,10 @@
 			id="alert1">
 			<div class="sy-title">Details</div>
 			<div class="sy-content">
-				<p class="input-item"> Hours: 3</p>
-				<p class="input-item"> Student: Tom</p>
-				<p class="input-item"> Teacher: Kazie</p>
-				<p class="input-item"> Time: 09:30-12:30</p>
+				<p class="input-item" > Hours: <span id="WinHours"></span></p>
+				<p class="input-item" > Student: <span id="WinStudent"></span></p>
+				<p class="input-item" > Teacher: <span id="WinTeacher"></span></p>
+				<p class="input-item" > Time: <span id="WinTime"></span></p>
 			</div>
 			<div class="sy-btn">
 				<button onClick="syalert.syhide('alert1')">Cancel</button>
@@ -87,13 +97,33 @@
 						Teachers：<label><input type="radio" value="Kezia" name="name" checked="checked">Kezia
 						</label>
 					</p>
-					<p class="input-item"><input id="hour" type="text" placeholder="What hours" /></p>
-					<p class="input-item"><input id="time" type="text" placeholder="When" /></p>
+					<p class="input-item"><input id="hour" type="text" placeholder="How long" /></p>
+					<p class="input-item"><input id="time" type="text" placeholder="When (09:30-10:30)" /></p>
 				</div>
 			</div>
 			<div class="sy-btn">
 				<button onClick="syalert.syhide('alert4')">Cancel</button>
 				<button onClick="ok('alert4')">Confirm</button>
+			</div>
+		</div>
+		
+		<!-- 充值弹窗 -->
+		<div class="sy-alert sy-alert-model animated" sy-enter="zoomIn" sy-leave="zoomOut" sy-type="confirm"
+			sy-mask="true" id="alert5">
+			<div class="sy-content">
+				<div class="form">
+					<p class="">
+						Teachers：<label><input type="radio" value="Kezia" name="teacher" checked="checked">Kezia
+						</label>
+					</p>
+					<p class="input-item"><input id="addHour" type="text" placeholder="How long" /></p>
+					<p class="input-item"><input id="rmb" type="text" placeholder="How much in RMB" /></p>
+					<p class="input-item"><input id="php" type="text" placeholder="How much in PHP" /></p>
+				</div>
+			</div>
+			<div class="sy-btn">
+				<button onClick="syalert.syhide('alert5')">Cancel</button>
+				<button onClick="ok('alert5')">Confirm</button>
 			</div>
 		</div>
 
@@ -107,19 +137,51 @@
 			
 			
 			$(function() {
+				ClassHourInitialize();
 				setTimeout(function() {
+					
 				}, 1000);
 				
 			});
+			
+			function ClassHourInitialize(){
+				$.ajax({
+					type : "get",
+					url : "/getClassHour",
+					dataType:'json',
+					data : {
+							'userId':userId
+							},
+					success : function(data) {
+						$("#myHours").html(data.data);
+					}
+				});
+			}
+			
+			
 
 			$("#addClassHour").click(function(){
-				syalert.syopen('alert4');
-				
+				syalert.syopen('alert5');
 			});
 			
 			
 			function check(id) {
 				timeId = id;
+				
+				$("#WinHours").html("0");
+				$("#WinStudent").html("empty");
+				$("#WinTeacher").html("empty");
+				$("#WinTime").html("empty");
+				
+				for (let data of datas) {
+					if(id == data.day){
+						$("#WinHours").html(data.hour);
+						$("#WinStudent").html(data.student);
+						$("#WinTeacher").html(data.teacher);
+						$("#WinTime").html(data.specificTime);
+					}
+				}
+				
 				syalert.syopen('alert1');
 			}
 
@@ -133,7 +195,7 @@
 					}, 300)
 				} else if('alert4' == id){
 					let name = $("input[name='name']:checked").val();
-					let hour = $("#hour").val();
+					let hour = "-" + $("#hour").val();
 					let time = $("#time").val();
 					let index = $("#my" + timeId).attr("value");
 					$.ajax({
@@ -144,6 +206,26 @@
 								'hour':hour,
 								'specificTime':time,
 								'index':index,
+								'userId':userId
+								},//数据，json字符串
+						success : function(data) {//请求成功
+							let userId = data.data;
+							ClassHourInitialize();
+						}
+					});
+				} else if ('alert5' == id){
+					let name = $("input[name='teacher']:checked").val();
+					let hour = $("#addHour").val();
+					let rmb = $("#rmb").val();
+					let php = $("#php").val();
+					$.ajax({
+						type : "post",//请求方式
+						url : "/addClassHour",//请求地址
+						dataType:'json',
+						data : {'teacher':name, 
+								'hour':hour,
+								'rmb':rmb,
+								'php':php,
 								'userId':userId
 								},//数据，json字符串
 						success : function(data) {//请求成功

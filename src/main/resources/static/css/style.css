@@ -102,6 +102,7 @@ body{
 [data-theme="dec"] .header .text,
 [data-theme="dec"] .table .row .cell.active span{background-color:#546E7A}
 
+.studied span{color: #0000FF;}
 
 /* 鼠标悬停相关 */
 #jumpWindow {
@@ -111,6 +112,7 @@ body{
 	width: 160px;
 	background: #e0edf7;
 	border-radius: 6px;
+	font-size: 13px;
 }
 
 #jumpWindow::before {

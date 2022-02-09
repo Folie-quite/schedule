@@ -615,63 +615,63 @@ public class ClassHourExample {
             return (Criteria) this;
         }
 
-        public Criteria andChangeIsNull() {
-            addCriterion("change is null");
+        public Criteria andVariationIsNull() {
+            addCriterion("variation is null");
             return (Criteria) this;
         }
 
-        public Criteria andChangeIsNotNull() {
-            addCriterion("change is not null");
+        public Criteria andVariationIsNotNull() {
+            addCriterion("variation is not null");
             return (Criteria) this;
         }
 
-        public Criteria andChangeEqualTo(Integer value) {
-            addCriterion("change =", value, "change");
+        public Criteria andVariationEqualTo(Integer value) {
+            addCriterion("variation =", value, "variation");
             return (Criteria) this;
         }
 
-        public Criteria andChangeNotEqualTo(Integer value) {
-            addCriterion("change <>", value, "change");
+        public Criteria andVariationNotEqualTo(Integer value) {
+            addCriterion("variation <>", value, "variation");
             return (Criteria) this;
         }
 
-        public Criteria andChangeGreaterThan(Integer value) {
-            addCriterion("change >", value, "change");
+        public Criteria andVariationGreaterThan(Integer value) {
+            addCriterion("variation >", value, "variation");
             return (Criteria) this;
         }
 
-        public Criteria andChangeGreaterThanOrEqualTo(Integer value) {
-            addCriterion("change >=", value, "change");
+        public Criteria andVariationGreaterThanOrEqualTo(Integer value) {
+            addCriterion("variation >=", value, "variation");
             return (Criteria) this;
         }
 
-        public Criteria andChangeLessThan(Integer value) {
-            addCriterion("change <", value, "change");
+        public Criteria andVariationLessThan(Integer value) {
+            addCriterion("variation <", value, "variation");
             return (Criteria) this;
         }
 
-        public Criteria andChangeLessThanOrEqualTo(Integer value) {
-            addCriterion("change <=", value, "change");
+        public Criteria andVariationLessThanOrEqualTo(Integer value) {
+            addCriterion("variation <=", value, "variation");
             return (Criteria) this;
         }
 
-        public Criteria andChangeIn(List<Integer> values) {
-            addCriterion("change in", values, "change");
+        public Criteria andVariationIn(List<Integer> values) {
+            addCriterion("variation in", values, "variation");
             return (Criteria) this;
         }
 
-        public Criteria andChangeNotIn(List<Integer> values) {
-            addCriterion("change not in", values, "change");
+        public Criteria andVariationNotIn(List<Integer> values) {
+            addCriterion("variation not in", values, "variation");
             return (Criteria) this;
         }
 
-        public Criteria andChangeBetween(Integer value1, Integer value2) {
-            addCriterion("change between", value1, value2, "change");
+        public Criteria andVariationBetween(Integer value1, Integer value2) {
+            addCriterion("variation between", value1, value2, "variation");
             return (Criteria) this;
         }
 
-        public Criteria andChangeNotBetween(Integer value1, Integer value2) {
-            addCriterion("change not between", value1, value2, "change");
+        public Criteria andVariationNotBetween(Integer value1, Integer value2) {
+            addCriterion("variation not between", value1, value2, "variation");
             return (Criteria) this;
         }
 

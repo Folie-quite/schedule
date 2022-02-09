@@ -1,6 +1,7 @@
 var toMonth;
 var localStorage = window.localStorage;
 var userId = localStorage.getItem('userId');
+var datas;
 
 var Calendar = function(t) {
 	this.divId = t.RenderID ? t.RenderID : '[data-render="calendar"]', this.DaysOfWeek = t.DaysOfWeek ? t
@@ -40,6 +41,9 @@ Calendar.prototype.nextMonth = function() {
 	setTimeout(function() {
 		for (let j = 1; j < 33; j++) {
 			addBob(j);
+		}
+		for (let data of datas) {
+			$("#my" + data.day).addClass("studied");
 		}
 	}, 1000);
 }, Calendar.prototype.Calendar = function(t, e) {
@@ -111,18 +115,42 @@ function initialize(month, year) {
 			'userId': userId
 		}, //数据，json字符串
 		success: function(data) { //请求成功
-			let userId = data.data;
+			datas = data.data;
 		}
 	});
+	
+	$.ajax({
+		type : "get",
+		url : "/getClassHours",
+		dataType:'json',
+		data : {
+				'userId':userId
+				},
+		success : function(data) {
+			$("#myHours").html(data.data);
+		}
+	});
+	
+	
 }
 
 function addBob(id) {
 
 	$("#my" + id).hover(function() {
 
-
-
-		$("#jumpWindow").html(id + "<br> test,<br> teach <br>erasdf");
+		let turn = true;
+		for (let data of datas) {
+			if(data.day == id){
+				$("#jumpWindow").html("Hour: " + data.hour +",<br> Student: " + data.student + 
+									",<br> Teacher: " + data.teacher + ",<br>" + data.specificTime);
+				turn = false;					
+			}
+		}
+		
+		if(turn){
+			$("#jumpWindow").html("Sorry, there were any classes this day!");
+		}
+		
 		show_jumpWindow(this);
 	}, function() {
 		show_jumpWindow();

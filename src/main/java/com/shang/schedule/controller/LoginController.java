@@ -1,14 +1,18 @@
 package com.shang.schedule.controller;
 
+import com.shang.schedule.configuration.SystemLogsAOP;
 import com.shang.schedule.jedis.JedisService;
 import com.shang.schedule.pojo.Users;
 import com.shang.schedule.service.UsersService;
+import com.shang.schedule.utils.CookieUtils;
 import com.shang.schedule.utils.MyResult;
-import com.shang.schedule.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Writer: 尚钰洋
@@ -34,17 +38,16 @@ public class LoginController {
 
 	@RequestMapping("/login")
 	@ResponseBody
-	public MyResult loginUser(String user, String password){
+	@SystemLogsAOP
+	public MyResult loginUser(String user, String password, HttpServletRequest request, HttpServletResponse response){
 		MyResult result = null;
 		try {
 			if(usersService.verifyLogin(user, password)){
 				Users users = usersService.selectUserByUserName(user);
 				String s = users.getId().toString();
-				System.out.println(s);
 				jedisService.set(s, users);
-				Users user1 = (Users)jedisService.get(s);
-				System.out.println(user1.getUserName());
 				result = new MyResult(users.getId());
+				CookieUtils.setCookie(request, response, "token", s, 600000);
 			} else {
 				result = new MyResult(0);
 			}

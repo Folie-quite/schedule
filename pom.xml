@@ -45,6 +45,11 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+        </dependency>
+
         <!--redis缓存相关-->
         <!-- Redis客户端 -->
         <dependency>
@@ -52,9 +57,23 @@
             <artifactId>jedis</artifactId>
         </dependency>
 
+        <!-- Jackson Json处理工具包 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
+        <finalName>schedule</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

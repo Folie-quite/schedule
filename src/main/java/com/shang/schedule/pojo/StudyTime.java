@@ -1,5 +1,7 @@
 package com.shang.schedule.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -8,10 +10,12 @@ public class StudyTime implements Serializable {
 
     private String createUser;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
 
     private String updateUser;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateDate;
 
     private String teacher;
